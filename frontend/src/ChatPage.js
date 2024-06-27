@@ -17,16 +17,6 @@ function ChatPage() {
 
   return (
     <div>
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton edge="start" color="inherit" aria-label="back" onClick={() => navigate(-1)}>
-            <ArrowBackIcon />
-          </IconButton>
-          <Typography variant="h6">
-            {friend ? friend.name : 'Unknown User'}
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <Chat gallId={friendId} name={friend ? friend.name : 'Unknown User'} />
     </div>
   );

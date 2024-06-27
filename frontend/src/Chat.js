@@ -23,9 +23,9 @@ function Chat({ name, gallId }) {
       console.error('Error fetching messages:', error);
       if (error.response) {
         if (error.response.status === 404) {
-          setError({ status: true, message: '갤러리 아이디가 틀렸을 수 있습니다.' });
+          setError({ status: true, message: '갤러리가 존재하지 않습니다' });
         } else if (error.response.status === 500) {
-          setError({ status: true, message: '서버에 오류가 있습니다.' });
+          setError({ status: true, message: '서버에서 오류가 발생했습니다.' });
         } else {
           setError({ status: true, message: '알 수 없는 오류가 발생했습니다.' });
         }
@@ -71,18 +71,24 @@ function Chat({ name, gallId }) {
             <p className="error-text">{error.message}</p>
           </div>
         ) : (
-          messages.map((msg, index) => (
-            <div key={index} className={`message ${getRecommendationClass(msg.추천 + msg.댓글수)}`}>
-              <img src={msg.이미지} alt={`${msg.글쓴이}'s profile`} className="profile-pic" />
-              <div className="message-content">
-                <div className="message-header">
-                  <span className="message-name">{msg.글쓴이}</span>
-                  <span className="message-time">{msg.작성일}</span>
+          Array.isArray(messages) && messages.length > 0 ? (
+            messages.map((msg, index) => (
+              <div key={index} className={`message ${getRecommendationClass(msg.추천 + msg.댓글수)}`}>
+                <img src={msg.이미지} alt={`${msg.글쓴이}'s profile`} className="profile-pic" />
+                <div className="message-content">
+                  <div className="message-header">
+                    <span className="message-name">{msg.글쓴이}</span>
+                    <span className="message-time">{msg.작성일}</span>
+                  </div>
+                  <div className="message-text">{msg.제목}</div>
                 </div>
-                <div className="message-text">{msg.제목}</div>
               </div>
+            ))
+          ) : (
+            <div className="no-messages">
+              <p>No messages to display.</p>
             </div>
-          ))
+          )
         )}
         <div ref={messagesEndRef} />
       </div>

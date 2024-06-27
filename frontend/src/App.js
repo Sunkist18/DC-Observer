@@ -2,7 +2,6 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FriendsPage from './FriendsPage';
 import ChatPage from './ChatPage';
-import Chat from './Chat';
 
 function App() {
   return (

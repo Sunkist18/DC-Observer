@@ -8,8 +8,7 @@ import DeleteIcon from '@mui/icons-material/Delete'; // 삭제 아이콘 추가
 import { Link } from 'react-router-dom';
 
 const initialFriends = [
-  { id: 1, name: '겐지 갤러리', username: 'owgenji' },
-  { id: 2, name: '국내야구 갤러리', username: 'baseball_new11' },
+  { id: 1, name: '우측 상단의 버튼으로 갤러리를 추가해보세요!', username: 'backend' },
 ];
 
 function FriendsPage() {
@@ -42,7 +41,8 @@ function FriendsPage() {
     handleClose();
   };
 
-  const handleDeleteFriend = (id) => {
+  const handleDeleteFriend = (id, event) => {
+    event.stopPropagation(); // 이벤트 전파를 막기 위해 stopPropagation 사용
     setFriends(friends.filter(friend => friend.id !== id));
   };
 
@@ -60,16 +60,12 @@ function FriendsPage() {
       </AppBar>
       <List>
         {friends.map((friend) => (
-          <ListItem key={friend.id}>
+          <ListItem button component={Link} to={`/chat/${friend.username}`} key={friend.id}>
             <ListItemAvatar>
               <Avatar>{friend.name.charAt(0)}</Avatar>
             </ListItemAvatar>
-            <ListItemText
-              primary={friend.name}
-              secondary={friend.username}
-              component={Link} to={`/chat/${friend.username}`}
-            />
-            <IconButton edge="end" color="inherit" aria-label="delete" onClick={() => handleDeleteFriend(friend.id)}>
+            <ListItemText primary={friend.name} secondary={friend.username} />
+            <IconButton edge="end" color="inherit" aria-label="delete" onClick={(event) => handleDeleteFriend(friend.id, event)}>
               <DeleteIcon />
             </IconButton>
           </ListItem>
