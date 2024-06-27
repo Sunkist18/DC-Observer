@@ -15,7 +15,7 @@ function Chat({ name, gallId }) {
 
   const fetchMessages = async (gallId) => {
     try {
-      let response = await axios.get(`/api/posts/${gallId}`);
+      let response = await axios.get(`http://5.104.84.170:5000/api/posts/${gallId}`);
       setMessages(response.data);
       setError({ status: false, message: '' });
       scrollToBottom();

@@ -1,12 +1,15 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 import requests
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
 
 app = Flask(__name__)
 
+CORS(app)  # 모든 도메인에서 오는 요청을 허용
+
 # Function to fetch titles from DCInside board
-def fetch_titles(gall_id="baseball_new11"):
+def fetch_titles(gall_id):
     url = f"https://gall.dcinside.com/board/lists/?id={gall_id}"
     headers = {
         "User-Agent": UserAgent(browsers=["chrome"], os="windows").chrome,
@@ -68,4 +71,4 @@ def get_posts(gall_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run("0.0.0.0")
