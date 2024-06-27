@@ -59,10 +59,11 @@ def fetch_titles(gall_id="baseball_new11"):
 def get_posts(gall_id):
     try:
         posts = fetch_titles(gall_id)
-        if posts.empty():
+        if len(posts) == 0:
             jsonify({"error": "posts not found"}), 404
         return jsonify(posts)
     except Exception as e:
+        print(e)
         return jsonify({"error": str(e)}), 500
 
 
