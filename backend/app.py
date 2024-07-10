@@ -27,9 +27,12 @@ def fetch_titles(gall_id):
     headers = [th.get_text(strip=True) for th in soup.find_all("th", scope="col")]
     # Assuming the data follows immediately in <tr> tags under a common parent with headers
     posts = soup.find_all('tr', class_='ub-content us-post')
-    img_span = soup.find(class_="cover")["style"]
-    img_url = img_span.split("url(")[1].split(")")[0]
-
+    img_span = soup.find(class_="cover")
+    if img_span:
+        img_span = img_span["style"]
+        img_url = img_span.split("url(")[1].split(")")[0]
+    else:
+        img_url = None
     # Prepare to collect data
     extracted_data = []
 
@@ -48,7 +51,7 @@ def fetch_titles(gall_id):
         for i, header in enumerate(headers):
             row_data[header] = cols[i].get_text(strip=True)
         
-        row_data["제목"] = title_element.get_text(strip=True)
+        row_data["제목"] = title_element.get_text(strip=True).split('[')[0]
         row_data["이미지"] = img_url
         row_data["댓글수"] = 0 if "[" not in row_data["제목"] else int(row_data["제목"].split("[")[-1].split("]")[0])
         extracted_data.append(row_data)
@@ -58,7 +61,7 @@ def fetch_titles(gall_id):
     return extracted_data
 
 
-@app.route("/api/posts/<gall_id>", methods=["GET"])
+@app.route("/posts/<gall_id>", methods=["GET"])
 def get_posts(gall_id):
     try:
         posts = fetch_titles(gall_id)

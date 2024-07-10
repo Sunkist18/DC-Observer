@@ -8,7 +8,8 @@ import DeleteIcon from '@mui/icons-material/Delete'; // 삭제 아이콘 추가
 import { Link } from 'react-router-dom';
 
 const initialFriends = [
-  { id: 1, name: '우측 상단의 버튼으로 갤러리를 추가해보세요!', username: 'backend' },
+  { id: 1, name: '채팅방은 개인 기기에만 생성되며, 다른 사람들에게는 보여지지 않습니다.', username: 'backend' },
+  { id: 2, name: '우측 상단의 플러스 버튼을 통해 갤러리 채팅방을 만들 수 있습니다.', username: 'backend' },
 ];
 
 function FriendsPage() {
@@ -72,12 +73,12 @@ function FriendsPage() {
         ))}
       </List>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>친구 추가</DialogTitle>
+        <DialogTitle>갤러리 추가</DialogTitle>
         <DialogContent>
           <TextField
             autoFocus
             margin="dense"
-            label="이름"
+            label="채팅방 이름"
             type="text"
             fullWidth
             value={newFriend.name}
@@ -85,7 +86,7 @@ function FriendsPage() {
           />
           <TextField
             margin="dense"
-            label="아이디"
+            label="갤러리 아이디"
             type="text"
             fullWidth
             value={newFriend.username}
